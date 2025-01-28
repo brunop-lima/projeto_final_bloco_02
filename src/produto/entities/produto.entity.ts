@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsNumber } from "class-validator";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { NumericTransformer } from "../../util/numerictransformer";
+import { Categoria } from "../../categoria/entities/categoria.entity";
 
 @Entity({name: 'tb_produtos'})
 export class Produto {
@@ -21,9 +22,8 @@ export class Produto {
     @Column({length: 5000})
     foto: string;
 
-
-    // Relacionamento com Categoria
-    //@ManyToOne(() => Categoria, (categoria) => categoria.produto, {
-        //onDelete: "CASCADE"
-    //})
+    @ManyToOne(() => Categoria, (categoria) => categoria.produto, {
+        onDelete: "CASCADE"
+    })
+    categoria: Categoria
 }

@@ -13,24 +13,22 @@ export class ProdutoService{
 
     async findAll(): Promise<Produto[]>{
         return this.produtoRepository.find(
-            //{
-            //relations: {
-                //categoria: true,
-                //usuario: true,
-            //}
-        //}
+            {
+            relations: {
+                categoria: true,
+            }
+        }
     )
     }
-
 
    async findById(id: number): Promise<Produto>{
      const produto = await this.produtoRepository.findOne({
             where: {
                 id
             },
-           // relations: {
-                //categoria: true,
-            //}
+            relations: {
+                categoria: true,
+            }
         })
 
         if(!produto)
@@ -44,12 +42,12 @@ export class ProdutoService{
             where: {
                 nome: ILike(`%${nome}%`)
             },
-           // relations: {
-               // categoria: true,
-            //}
+            relations: {
+                categoria: true,
+            }
         })
         if (produto.length === 0) {  
-            throw new HttpException(`⚠️ Nenhum resultado encontrado com o ${nome}`, HttpStatus.NOT_FOUND);  // Trate o erro conforme necessário  
+            throw new HttpException(`⚠️ Nenhum resultado encontrado com o ${nome}`, HttpStatus.NOT_FOUND);
             }  
         return produto;
     }
