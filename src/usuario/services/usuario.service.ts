@@ -11,6 +11,7 @@ export class UsuarioService {
     constructor(
         @InjectRepository(Usuario)
         private usuarioRepository: Repository<Usuario>,
+        private bcrypt: Bcrypt,
     ) {}
 
     
@@ -61,9 +62,10 @@ export class UsuarioService {
         
         const buscaUsuario = await this.findByUsuario(usuario.usuario);
 
-        if (buscaUsuario)
+        if (buscaUsuario && buscaUsuario.id !== usuario.id)
             throw new HttpException("⚠️ O Usuario já existe!", HttpStatus.BAD_REQUEST);
 
+        usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
         return await this.usuarioRepository.save(usuario);
 
     }

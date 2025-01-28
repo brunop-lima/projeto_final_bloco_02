@@ -16,9 +16,9 @@ export class ProdutoService{
             {
             relations: {
                 categoria: true,
+                usuario: true,
             }
-        }
-    )
+        })
     }
 
    async findById(id: number): Promise<Produto>{
@@ -28,6 +28,7 @@ export class ProdutoService{
             },
             relations: {
                 categoria: true,
+                usuario: true,
             }
         })
 
@@ -44,6 +45,7 @@ export class ProdutoService{
             },
             relations: {
                 categoria: true,
+                usuario: true,
             }
         })
         if (produto.length === 0) {  

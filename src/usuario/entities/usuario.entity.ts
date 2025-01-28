@@ -1,6 +1,7 @@
 import { IsDateString, IsEmail, IsNotEmpty, MinLength } from "class-validator"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Produto } from "../../produto/entities/produto.entity"
+import { Transform, TransformFnParams } from "class-transformer"
 
 
 @Entity({name: "tb_usuarios"})
@@ -26,8 +27,10 @@ export class Usuario {
     @Column({length: 5000 }) 
     foto: string
 
-    @IsDateString()
-    @Column({type: "date"})
-    dataNascimento: Date
+    @Transform(({ value }: TransformFnParams) => value?.trim())
+    @IsNotEmpty()
+    data_nasc: string;
     
+    @OneToMany(() => Produto, (produto) => produto.usuario)
+    produto: Produto[]
 }
